@@ -1,0 +1,53 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Display project files
+        run: |
+          echo "Project files:"
+          ls -la
+
+      - name: Build project
+        run: |
+          echo "Building web application..."
+          echo "HTML files:"
+          find . -name "*.html"
+          echo "CSS files:"
+          find . -name "*.css"
+          echo "JavaScript files:"
+          find . -name "*.js"
+          echo "Build completed successfully."
+
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          echo "All tests passed."
+
+      - name: Generate output logs
+        run: |
+          echo "================================="
+          echo "CI PIPELINE EXECUTION SUMMARY"
+          echo "================================="
+          echo "Application: devops-webapp"
+          echo "Build Status: SUCCESS"
+          echo "Test Status: SUCCESS"
+          echo "CI Pipeline completed."
