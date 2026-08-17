@@ -51,3 +51,19 @@ jobs:
           echo "Build Status: SUCCESS"
           echo "Test Status: SUCCESS"
           echo "CI Pipeline completed."
+
+      - name: Send success notification to Slack
+        if: success()
+        run: |
+          curl -X POST \
+          -H 'Content-type: application/json' \
+          --data '{"text":"✅ CI Pipeline SUCCESS - devops-webapp build and tests passed."}' \
+          "${{ secrets.SLACK_WEBHOOK_URL }}"
+
+      - name: Send failure notification to Slack
+        if: failure()
+        run: |
+          curl -X POST \
+          -H 'Content-type: application/json' \
+          --data '{"text":"❌ CI Pipeline FAILED - devops-webapp build or tests failed."}' \
+          "${{ secrets.SLACK_WEBHOOK_URL }}"
